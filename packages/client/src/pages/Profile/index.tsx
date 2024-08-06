@@ -1,10 +1,41 @@
 import React, { useState } from "react";
-import { Card, Avatar, Space, Modal, Typography, Col, Row, Input } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { useAuthStore } from "../../entities/profile";
+import { validatePassword } from "../../service/validator";
+import {
+    Card,
+    Avatar,
+    Space,
+    Modal,
+    Typography,
+    Col,
+    Row,
+    Input,
+    Form,
+    Button,
+} from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+
+type TForm = {
+    oldPassword: string;
+    newPassword: string;
+};
 
 const { Text } = Typography;
 
 export const Profile: React.FC<object> = () => {
+    // const signIn = useAuthStore((state) => state.signIn);
+
+    const onPasswordFinish = async (values: TForm) => {
+        console.log(values);
+        setIsChangePassModalOpen(false);
+        // try {
+        //     await signIn(values);
+        //     history.push("/");
+        // } catch (error) {
+        //     void 0;
+        // }
+    };
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isChangeAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
     const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
@@ -34,10 +65,6 @@ export const Profile: React.FC<object> = () => {
 
     const handChangeAvatarCancel = () => {
         setIsAvatarModalOpen(false);
-    };
-
-    const handleChangePassOk = () => {
-        setIsChangePassModalOpen(false);
     };
 
     const handleChangePassCancel = () => {
@@ -127,9 +154,9 @@ export const Profile: React.FC<object> = () => {
                             onOk={handChangeAvatarOk}
                             onCancel={handChangeAvatarCancel}
                         >
-                            <Row>
+                            <Form>
                                 <Input type="file"></Input>
-                            </Row>
+                            </Form>
                         </Modal>
                     </Row>
                 }
@@ -145,27 +172,46 @@ export const Profile: React.FC<object> = () => {
                         style={{ textAlign: "center" }}
                         title="Изменение пороля пользователя"
                         open={isChangePassModalOpen}
-                        onOk={handleChangePassOk}
+                        footer={null}
                         onCancel={handleChangePassCancel}
                     >
-                        <Row>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                {" "}
-                                <Text strong>Пароль:</Text>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <Input.Password placeholder="input password" />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                {" "}
-                                <Text strong>Повторите пароль:</Text>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <Input.Password placeholder="input password" />
-                            </Col>
-                        </Row>
+                        <Form
+                            name="normal_login"
+                            size="large"
+                            onFinish={onPasswordFinish}
+                        >
+                            <Form.Item
+                                name="oldPassword"
+                                style={{ marginBottom: "16px" }}
+                                rules={[{ validator: validatePassword }]}
+                            >
+                                <Input.Password
+                                    prefix={
+                                        <LockOutlined className="site-form-item-icon" />
+                                    }
+                                    type="password"
+                                    placeholder="Старый пароль"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="newPassword"
+                                style={{ marginBottom: "16px" }}
+                                rules={[{ validator: validatePassword }]}
+                            >
+                                <Input.Password
+                                    prefix={
+                                        <LockOutlined className="site-form-item-icon" />
+                                    }
+                                    type="password"
+                                    placeholder="Новый пароль"
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit">
+                                    Сменить
+                                </Button>
+                            </Form.Item>
+                        </Form>
                     </Modal>
                 </Row>
                 <Row>
@@ -173,7 +219,7 @@ export const Profile: React.FC<object> = () => {
                         style={{ color: "#ff0000", cursor: "pointer" }}
                         onClick={showModal}
                     >
-                        Выйти
+                        Выход
                     </Text>
                     <Modal
                         width={400}
