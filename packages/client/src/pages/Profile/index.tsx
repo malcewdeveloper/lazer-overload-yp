@@ -1,31 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { history, routes } from "../../service";
-import {
-    Card,
-    Button,
-    Avatar,
-    Space,
-    Modal,
-    Typography,
-    Col,
-    Row,
-    Input,
-} from "antd";
+import { Card, Avatar, Space, Modal, Typography, Col, Row, Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
 export const Profile: React.FC<object> = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isChangeDataModalOpen, setIsDataModaModalOpen] = useState(false);
+    const [isChangeAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
     const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
     };
-    const showChangeDataModal = () => {
-        setIsDataModaModalOpen(true);
+    const showChangeAvatarModal = () => {
+        setIsAvatarModalOpen(true);
     };
 
     const showChangePassModal = () => {
@@ -40,13 +28,14 @@ export const Profile: React.FC<object> = () => {
         setIsModalOpen(false);
     };
 
-    const handChangeDataleOk = () => {
-        setIsDataModaModalOpen(false);
+    const handChangeAvatarOk = () => {
+        setIsAvatarModalOpen(false);
     };
 
-    const handChangeDataleCancel = () => {
-        setIsDataModaModalOpen(false);
+    const handChangeAvatarCancel = () => {
+        setIsAvatarModalOpen(false);
     };
+
     const handleChangePassOk = () => {
         setIsChangePassModalOpen(false);
     };
@@ -122,68 +111,28 @@ export const Profile: React.FC<object> = () => {
                     </Col>
                     <Col span={12}>9876543210</Col>
                 </Row>
-                <Row>
-                    <Text
-                        style={{ color: "#3369f3", cursor: "pointer" }}
-                        onClick={showChangeDataModal}
-                    >
-                        Изменить данные
-                    </Text>
-                    <Modal
-                        width={400}
-                        style={{ textAlign: "center" }}
-                        title="Изменение данных профиля"
-                        open={isChangeDataModalOpen}
-                        onOk={handChangeDataleOk}
-                        onCancel={handChangeDataleCancel}
-                    >
-                        <Row>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                {" "}
-                                <Text strong>Логин:</Text>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <Input placeholder="Иван" />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                {" "}
-                                <Text strong>Имя:</Text>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <Input placeholder="Иван" />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                {" "}
-                                <Text strong>Фамилия:</Text>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <Input placeholder="Иванов" />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                {" "}
-                                <Text strong>Электронная почта:</Text>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <Input placeholder="Ivan@test.ru" />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                {" "}
-                                <Text strong>Номер телефона:</Text>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <Input placeholder="9876543210" />
-                            </Col>
-                        </Row>
-                    </Modal>
-                </Row>
+                {
+                    <Row>
+                        <Text
+                            style={{ color: "#3369f3", cursor: "pointer" }}
+                            onClick={showChangeAvatarModal}
+                        >
+                            Изменить аватар
+                        </Text>
+                        <Modal
+                            width={400}
+                            style={{ textAlign: "center" }}
+                            title="Изменение аватара профиля"
+                            open={isChangeAvatarModalOpen}
+                            onOk={handChangeAvatarOk}
+                            onCancel={handChangeAvatarCancel}
+                        >
+                            <Row>
+                                <Input type="file"></Input>
+                            </Row>
+                        </Modal>
+                    </Row>
+                }
                 <Row>
                     <Text
                         style={{ color: "#3369f3", cursor: "pointer" }}
@@ -205,10 +154,7 @@ export const Profile: React.FC<object> = () => {
                                 <Text strong>Пароль:</Text>
                             </Col>
                             <Col span={12} style={{ textAlign: "left" }}>
-                                <Input.Password
-                                    placeholder="input password"
-                                    //   visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
-                                />
+                                <Input.Password placeholder="input password" />
                             </Col>
                         </Row>
                         <Row>
@@ -217,10 +163,7 @@ export const Profile: React.FC<object> = () => {
                                 <Text strong>Повторите пароль:</Text>
                             </Col>
                             <Col span={12} style={{ textAlign: "left" }}>
-                                <Input.Password
-                                    placeholder="input password"
-                                    //   visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
-                                />
+                                <Input.Password placeholder="input password" />
                             </Col>
                         </Row>
                     </Modal>
