@@ -1,21 +1,36 @@
 import Entity from "./Entity";
+import Sprite from "./Sprite";
+import { TFrame } from "./types";
 
 export default class Battery extends Entity {
-    constructor(x: number, y: number) {
+    private _sprite: Sprite;
+    public frames: TFrame[];
+
+    constructor(x: number, y: number, spritePath: string, frames: TFrame[]) {
         super(x, y, 15, 25);
+
+        this.frames = frames;
+        this._sprite = new Sprite(
+            x,
+            y,
+            spritePath,
+            this.frames,
+            this.width,
+            this.height,
+        );
     }
 
     public update(deltaTime: number): void {
-        console.log(deltaTime);
+        this._sprite.update(deltaTime);
     }
 
     public render(ctx: CanvasRenderingContext2D): void {
-        ctx.fillStyle = "green";
-        ctx.fillRect(
-            this.x,
-            this.y - this.height! / 4,
-            this.width!,
-            this.height!,
-        );
+        ctx.save();
+
+        ctx.translate(this.x, this.y);
+
+        this._sprite.render(ctx);
+
+        ctx.restore();
     }
 }

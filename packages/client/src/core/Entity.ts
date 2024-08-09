@@ -1,3 +1,6 @@
+import { TFrame } from "./types";
+import { loadImage } from "../utils";
+
 export default abstract class Entity {
     public x: number;
     public y: number;
