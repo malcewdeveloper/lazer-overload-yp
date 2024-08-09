@@ -17,13 +17,13 @@ export default class Lazer extends Entity {
     }
 
     public update(deltaTime: number): void {
-        console.log(deltaTime);
+        // console.log(deltaTime);
     }
 
     public render(ctx: CanvasRenderingContext2D): void {
         ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x, 0);
+        ctx.moveTo(0, -this.y);
+        ctx.lineTo(0, 0);
         ctx.strokeStyle = "red";
         ctx.lineWidth = 2;
         ctx.stroke();
