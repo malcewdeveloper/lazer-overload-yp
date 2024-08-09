@@ -1,236 +1,182 @@
 import React, { useState } from "react";
-import { useAuthStore } from "../../entities/profile";
 import { validatePassword } from "../../service/validator";
 import {
     Card,
-    Avatar,
-    Space,
-    Modal,
     Typography,
-    Col,
     Row,
     Input,
     Form,
     Button,
+    Modal,
+    Upload,
+    UploadFile,
+    UploadProps,
 } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import {
+    TChangePasswordRequest,
+    TChangeProfileRequest,
+} from "../../entities/profile/types";
+import {
+    changeProfile,
+    changePassword,
+    changeAvatar,
+} from "../../entities/profile";
+import { useAuthStore } from "../../entities/auth";
+import { LockOutlined, UploadOutlined } from "@ant-design/icons";
 
-type TForm = {
-    oldPassword: string;
-    newPassword: string;
+type TFormChangeProfile = TChangeProfileRequest & {
+    avatar: UploadFile;
 };
 
-const { Text } = Typography;
-
 export const Profile: React.FC<object> = () => {
-    // const signIn = useAuthStore((state) => state.signIn);
+    const me = useAuthStore((state) => state.me);
+    const getMe = useAuthStore((state) => state.getMe);
+    const signOut = useAuthStore((state) => state.signOut);
 
-    const onPasswordFinish = async (values: TForm) => {
-        console.log(values);
-        setIsChangePassModalOpen(false);
-        // try {
-        //     await signIn(values);
-        //     history.push("/");
-        // } catch (error) {
-        //     void 0;
-        // }
+    const [fileList, setFileList] = useState<UploadFile[]>(() =>
+        me?.avatar
+            ? [
+                  {
+                      url:
+                          "https://ya-praktikum.tech/api/v2/resources" +
+                          me.avatar,
+                      uid: "1",
+                      name: "user",
+                  },
+              ]
+            : [],
+    );
+
+    const [changePasswordModalOpen, setChangePasswordModalOpen] =
+        useState(false);
+
+    const [form] = Form.useForm<TFormChangeProfile>();
+    const [changePasswordForm] = Form.useForm<TChangePasswordRequest>();
+
+    const onSubmitProfileChange = async (values: TFormChangeProfile) => {
+        const { avatar, ...rest } = values;
+
+        const requests = [changeProfile(rest)];
+
+        if (avatar?.originFileObj) {
+            requests.push(changeAvatar(avatar.originFileObj));
+        }
+
+        await Promise.all(requests);
+        getMe();
     };
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isChangeAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
-    const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-    const showChangeAvatarModal = () => {
-        setIsAvatarModalOpen(true);
+    const onSubmitPasswordChange = async (values: TChangePasswordRequest) => {
+        changePassword(values);
+        setChangePasswordModalOpen(false);
     };
 
-    const showChangePassModal = () => {
-        setIsChangePassModalOpen(true);
-    };
+    const handleChange: UploadProps["onChange"] = ({
+        fileList: newFileList,
+    }) => {
+        const lastImage = newFileList.at(-1);
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
-    const handChangeAvatarOk = () => {
-        setIsAvatarModalOpen(false);
-    };
-
-    const handChangeAvatarCancel = () => {
-        setIsAvatarModalOpen(false);
-    };
-
-    const handleChangePassCancel = () => {
-        setIsChangePassModalOpen(false);
+        if (!lastImage) {
+            setFileList([]);
+        } else {
+            setFileList([lastImage]);
+        }
     };
 
     return (
-        <div
-            style={{
-                boxShadow: "0px 0px 12px #444",
-                width: "400px",
-                height: "auto",
-                display: "flex",
-                margin: "0 auto",
-                flexDirection: "column",
-            }}
-        >
-            <Card
-                cover={
-                    <Space
-                        style={{ textAlign: "center" }}
-                        direction="vertical"
-                        size={16}
-                    >
-                        <Space wrap size={16}>
-                            <Avatar
-                                style={{ margin: "10px", textAlign: "center" }}
-                                size={164}
-                                icon={<UserOutlined />}
-                            />
-                        </Space>
-                    </Space>
-                }
-            >
+        <div>
+            <Card>
                 <Typography.Title style={{ textAlign: "center" }} level={1}>
                     Профиль
                 </Typography.Title>
-
-                <Row>
-                    <Col span={12}>
-                        {" "}
-                        <Text strong>Логин:</Text>
-                    </Col>
-                    <Col span={12}>Иван</Col>
-                </Row>
-                <Row>
-                    <Col span={12}>
-                        {" "}
-                        <Text strong>Имя:</Text>
-                    </Col>
-                    <Col span={12}>Иван</Col>
-                </Row>
-                <Row>
-                    <Col span={12}>
-                        {" "}
-                        <Text strong>Фамилия:</Text>
-                    </Col>
-                    <Col span={12}>Иванов</Col>
-                </Row>
-                <Row>
-                    <Col span={12}>
-                        {" "}
-                        <Text strong>Электронная почта:</Text>
-                    </Col>
-                    <Col span={12}>Ivan@test.ru</Col>
-                </Row>
-                <Row>
-                    <Col span={12}>
-                        {" "}
-                        <Text strong>Номер телефона:</Text>
-                    </Col>
-                    <Col span={12}>9876543210</Col>
-                </Row>
-                {
-                    <Row>
-                        <Text
-                            style={{ color: "#3369f3", cursor: "pointer" }}
-                            onClick={showChangeAvatarModal}
-                        >
-                            Изменить аватар
-                        </Text>
-                        <Modal
-                            width={400}
-                            style={{ textAlign: "center" }}
-                            title="Изменение аватара профиля"
-                            open={isChangeAvatarModalOpen}
-                            onOk={handChangeAvatarOk}
-                            onCancel={handChangeAvatarCancel}
-                        >
-                            <Form>
-                                <Input type="file"></Input>
-                            </Form>
-                        </Modal>
-                    </Row>
-                }
-                <Row>
-                    <Text
-                        style={{ color: "#3369f3", cursor: "pointer" }}
-                        onClick={showChangePassModal}
+                <Form
+                    form={form}
+                    initialValues={me}
+                    onFinish={onSubmitProfileChange}
+                >
+                    <Form.Item
+                        name="avatar"
+                        label=""
+                        getValueFromEvent={(e) => e.fileList?.at(-1)}
                     >
-                        Изменить пароль
-                    </Text>
-                    <Modal
-                        width={400}
-                        style={{ textAlign: "center" }}
-                        title="Изменение пороля пользователя"
-                        open={isChangePassModalOpen}
-                        footer={null}
-                        onCancel={handleChangePassCancel}
-                    >
-                        <Form
-                            name="normal_login"
-                            size="large"
-                            onFinish={onPasswordFinish}
+                        <Upload
+                            name="avatar"
+                            listType="picture-card"
+                            beforeUpload={() => false}
+                            fileList={fileList}
+                            showUploadList={{
+                                showDownloadIcon: false,
+                                showPreviewIcon: false,
+                            }}
+                            onChange={handleChange}
                         >
-                            <Form.Item
-                                name="oldPassword"
-                                style={{ marginBottom: "16px" }}
-                                rules={[{ validator: validatePassword }]}
-                            >
-                                <Input.Password
-                                    prefix={
-                                        <LockOutlined className="site-form-item-icon" />
-                                    }
-                                    type="password"
-                                    placeholder="Старый пароль"
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name="newPassword"
-                                style={{ marginBottom: "16px" }}
-                                rules={[{ validator: validatePassword }]}
-                            >
-                                <Input.Password
-                                    prefix={
-                                        <LockOutlined className="site-form-item-icon" />
-                                    }
-                                    type="password"
-                                    placeholder="Новый пароль"
-                                />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">
-                                    Сменить
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </Modal>
+                            <UploadOutlined />
+                        </Upload>
+                    </Form.Item>
+                    <Form.Item name="login" label="Логин">
+                        <Input disabled />
+                    </Form.Item>
+                    <Form.Item name="email" label="Email">
+                        <Input disabled />
+                    </Form.Item>
+                    <Form.Item name="display_name" label="Ник">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="first_name" label="Имя">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="second_name" label="Фамилия">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="phone" label="Телефон">
+                        <Input />
+                    </Form.Item>
+                </Form>
+                <Row>
+                    <Button onClick={form.submit}>Сохранить</Button>
                 </Row>
                 <Row>
-                    <Text
-                        style={{ color: "#ff0000", cursor: "pointer" }}
-                        onClick={showModal}
-                    >
-                        Выход
-                    </Text>
-                    <Modal
-                        width={400}
-                        style={{ textAlign: "center" }}
-                        title="Выйти из профиля?"
-                        open={isModalOpen}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
-                    ></Modal>
+                    <Button onClick={() => setChangePasswordModalOpen(true)}>
+                        Сменить пароль
+                    </Button>
+                </Row>
+                <Row>
+                    <Button onClick={() => signOut()}>Выход</Button>
                 </Row>
             </Card>
+
+            <Modal
+                open={changePasswordModalOpen}
+                title="Смена пароля"
+                onOk={changePasswordForm.submit}
+                onCancel={() => setChangePasswordModalOpen(false)}
+            >
+                <Form
+                    form={changePasswordForm}
+                    onFinish={onSubmitPasswordChange}
+                >
+                    <Form.Item
+                        name="oldPassword"
+                        rules={[{ validator: validatePassword }]}
+                    >
+                        <Input.Password
+                            prefix={<LockOutlined />}
+                            type="password"
+                            placeholder="Старый пароль"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="newPassword"
+                        rules={[{ validator: validatePassword }]}
+                    >
+                        <Input.Password
+                            prefix={<LockOutlined />}
+                            type="password"
+                            placeholder="Новый пароль"
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
     );
 };

@@ -8,15 +8,25 @@ import {
 } from "./types";
 
 export const changePassword = (
-    data: TChangePasswordResponce,
+    data: TChangePasswordRequest,
     config?: AxiosRequestConfig,
 ) => {
-    return authApi.put<TChangePasswordRequest>("/user/password", data, config);
+    return authApi.put<TChangePasswordResponce>("/user/password", data, config);
 };
 
 export const changeProfile = (
-    data: TChangeProfileResponce,
+    data: TChangeProfileRequest,
     config?: AxiosRequestConfig,
 ) => {
-    return authApi.put<TChangeProfileRequest>("/user/profile", data, config);
+    return authApi.put<TChangeProfileResponce>("/user/profile", data, config);
+};
+
+export const changeAvatar = (data: File, config?: AxiosRequestConfig) => {
+    const form = new FormData();
+    form.append("avatar", data);
+    return authApi.put<TChangeProfileResponce>(
+        "/user/profile/avatar",
+        form,
+        config,
+    );
 };

@@ -7,7 +7,7 @@ import {
     TSignUpResponce,
     TSigUpRequest,
 } from "./types";
-import { TAuthError } from "../../service";
+import { history, routes, TAuthError } from "../../service";
 import { AxiosRequestConfig, isAxiosError, isCancel } from "axios";
 import { notification } from "antd";
 
@@ -83,6 +83,8 @@ export const useAuthStore = create<TAuthStore>()(
                         store.me = initialState.me;
                         return store;
                     });
+
+                    history.push(routes.signIn.path);
 
                     return responce.data;
                 } catch (error: unknown) {
