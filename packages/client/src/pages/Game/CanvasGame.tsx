@@ -1,6 +1,6 @@
 import React from "react";
 import { Game, Reflector } from "../../core";
-import { Emitter, Battery } from "../../core";
+import { Emitter, Battery, Button } from "../../core";
 import { TFrame } from "../../core/types";
 import spritePath from "/sprite.png";
 
@@ -46,9 +46,12 @@ const CanvasGame: React.FC<object> = () => {
 
         const battery = new Battery(100, 50, spritePath, batteryFrames);
 
+        const button = new Button(150, 100, canvas, 200, 75, "Start Game");
+
         gameRef.current.addEntity(reflector);
         gameRef.current.addEntity(emitter);
         gameRef.current.addEntity(battery);
+        gameRef.current.addEntity(button);
 
         gameRef.current.start();
 
