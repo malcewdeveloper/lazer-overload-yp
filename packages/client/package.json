@@ -22,6 +22,7 @@
         "react-dom": "^18.2.0",
         "react-router-dom": "5.3.4",
         "sass": "^1.77.8",
+        "serialize-javascript": "^6.0.2",
         "vite": "^5.4.3",
         "zustand": "^4.5.4"
     },
@@ -32,6 +33,7 @@
         "@types/react-dom": "^18.0.6",
         "@types/react-router-dom": "^5.3.3",
         "@types/rollup": "^0.54.0",
+        "@types/serialize-javascript": "^5.0.4",
         "@typescript-eslint/eslint-plugin": "^5.35.1",
         "@typescript-eslint/parser": "^5.35.1",
         "@vitejs/plugin-react": "^2.0.1",

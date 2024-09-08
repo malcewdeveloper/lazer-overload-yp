@@ -6,7 +6,7 @@ const baseConfig: CreateAxiosDefaults = {
 
 const serverConfig: CreateAxiosDefaults = {
     ...baseConfig,
-    baseURL: `http://localhost:${__SERVER_PORT__}`,
+    baseURL: `http://localhost:3001`,
 };
 
 export const serverApi = axios.create(serverConfig);

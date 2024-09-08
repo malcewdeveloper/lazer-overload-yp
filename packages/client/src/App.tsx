@@ -21,10 +21,12 @@
 // }
 
 import { ConfigProvider, theme } from "antd";
+import { useUserStore } from "./entities/user";
 import "./App.css";
 
 function App() {
     const isDark = Math.random() > 0.5;
+    const user = useUserStore((state) => state.data);
 
     return (
         <ConfigProvider
@@ -34,7 +36,14 @@ function App() {
                     : theme.compactAlgorithm,
             }}
         >
-            <div>Здесь будет SSR!</div>
+            {user ? (
+                <div>
+                    <p>{user.name}</p>
+                    <p>{user.secondName}</p>
+                </div>
+            ) : (
+                <p>Пользователь не найден!</p>
+            )}
         </ConfigProvider>
     );
 }
