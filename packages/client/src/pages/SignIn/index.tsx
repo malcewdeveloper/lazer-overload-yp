@@ -2,7 +2,7 @@ import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Flex, Button, Form, Input, Typography } from "antd";
 import { Link } from "react-router-dom";
-import { history, routes } from "../../service";
+import { routes } from "../../service";
 import { validateLogin, validatePassword } from "../../service/validator";
 import classes from "./SignIn.module.scss";
 import { useAuthStore } from "../../entities/auth";
@@ -18,7 +18,7 @@ export const SingIn: React.FC<object> = () => {
     const onFinish = async (values: TForm) => {
         try {
             await signIn(values);
-            history.push("/");
+            // history.push("/");
         } catch (error) {
             void 0;
         }

@@ -1,17 +1,17 @@
 import { Button, List } from "antd";
-import { history, routes } from "../../../service";
+import { routes } from "../../../service";
 import { generatePath } from "react-router-dom";
 import { data } from "../mocks";
 
 export const PostList: React.FC = () => {
     const createPost = () => {
         const link = generatePath(routes.post.path, { postId: "new" });
-        history.push(link);
+        // history.push(link);
     };
 
     const openPost = (postId: number) => {
         const link = generatePath(routes.post.path, { postId });
-        history.push(link);
+        // history.push(link);
     };
 
     return (

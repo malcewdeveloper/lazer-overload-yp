@@ -3,7 +3,6 @@ import { generatePath } from "react-router-dom";
 import { routes } from "./routeMap";
 import { useAuthStore } from "../../entities/auth";
 import { LoadingOutlined } from "@ant-design/icons";
-import { history } from "../history";
 import { NotificationApi } from "..";
 import { isAxiosError } from "axios";
 
@@ -20,7 +19,7 @@ export const AuthGuard: React.FC<PropsWithChildren<any>> = ({ children }) => {
         getMe()
             .catch((error) => {
                 const link = generatePath(routes.signIn.path);
-                history.push(link);
+                // history.push(link);
 
                 if (isAxiosError(error)) {
                     NotificationApi.open({

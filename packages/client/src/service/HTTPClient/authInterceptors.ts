@@ -1,6 +1,5 @@
 import { isAxiosError } from "axios";
 import { authApi, serverApi } from ".";
-import { history } from "../history";
 import { generatePath } from "react-router-dom";
 import { routes } from "../routes";
 
@@ -15,7 +14,7 @@ export const setAuthInterceptors = () => {
 
             if (errResponce.status == 401) {
                 const path = generatePath(routes.error.path);
-                history.replace(path);
+                // history.replace(path);
             }
 
             return errResponce;
@@ -29,7 +28,7 @@ export const setAuthInterceptors = () => {
 
             if (errResponce.status == 401) {
                 const path = generatePath(routes.error.path);
-                history.replace(path);
+                // history.replace(path);
             }
 
             return errResponce;

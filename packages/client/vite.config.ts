@@ -1,3 +1,4 @@
+import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
@@ -10,6 +11,14 @@ export default defineConfig({
     },
     define: {
         __SERVER_PORT__: process.env.SERVER_PORT,
+        __EXTERNAL_SERVER_URL__: process.env.EXTERNAL_SERVER_URL,
+        __INTERNAL_SERVER_URL__: process.env.INTERNAL_SERVER_URL,
     },
     plugins: [react()],
+    build: {
+        outDir: path.join(__dirname, "dist/client"),
+    },
+    ssr: {
+        format: "cjs",
+    },
 });

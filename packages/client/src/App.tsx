@@ -1,6 +1,5 @@
-import { Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import { history } from "./service";
 import { ConfigProvider, theme } from "antd";
 import { Routes } from "./pages";
 
@@ -8,7 +7,7 @@ function App() {
     const isDark = Math.random() > 0.5;
 
     return (
-        <Router history={history}>
+        <BrowserRouter>
             <ConfigProvider
                 theme={{
                     algorithm: isDark
@@ -18,7 +17,7 @@ function App() {
             >
                 <Routes />
             </ConfigProvider>
-        </Router>
+        </BrowserRouter>
     );
 }
 

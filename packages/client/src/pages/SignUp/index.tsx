@@ -7,7 +7,7 @@ import {
     MailOutlined,
     PhoneOutlined,
 } from "@ant-design/icons";
-import { history, routes } from "../../service";
+import { routes } from "../../service";
 import {
     validateEmail,
     validateLogin,
@@ -35,7 +35,7 @@ export const SingUp: React.FC<object> = () => {
         const { confirm, ...rest } = values;
         try {
             await signUp(rest);
-            history.push("/");
+            // history.push("/");
         } catch (error) {
             void 0;
         }
