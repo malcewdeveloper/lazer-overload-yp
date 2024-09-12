@@ -1,3 +1,5 @@
+import { TNotificationOpen } from "./type";
+
 class NotificationClass {
     status: NotificationPermission = "default";
 
