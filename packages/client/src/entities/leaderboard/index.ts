@@ -20,7 +20,7 @@ export const initialState = {
     leaders: [],
 };
 
-export const useAuthStore = create<TLeaderboardActions>()(
+export const useLeaderboardStore = create<TLeaderboardActions>()(
     devtools(
         (set) => ({
             ...initialState,
