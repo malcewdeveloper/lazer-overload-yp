@@ -2,7 +2,9 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { postLeaderboard, postLeaderboards } from "./queries";
 import { TPostLeaderboardResponce, TPostLeaderboardsRequest } from "./types";
-import { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig, isAxiosError } from "axios";
+import { TAuthError } from "../../service";
+import { notification } from "antd";
 
 type TLeaderboardActions = {
     postLeaderboard: (
@@ -31,6 +33,14 @@ export const useLeaderboardStore = create<TLeaderboardActions>()(
 
                     return reponce.data;
                 } catch (error: unknown) {
+                    if (isAxiosError<TAuthError>(error)) {
+                        notification.error({
+                            message: error.response?.data.reason,
+                        });
+                    } else {
+                        console.log(error);
+                    }
+
                     throw error;
                 }
             },
@@ -47,6 +57,14 @@ export const useLeaderboardStore = create<TLeaderboardActions>()(
 
                     return responce.data;
                 } catch (error: unknown) {
+                    if (isAxiosError<TAuthError>(error)) {
+                        notification.error({
+                            message: error.response?.data.reason,
+                        });
+                    } else {
+                        console.log(error);
+                    }
+
                     throw error;
                 }
             },
