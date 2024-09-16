@@ -1,6 +1,13 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { getMe, signIn, signOut, signUp } from "./queries";
+import {
+    getClientId,
+    getMe,
+    signIn,
+    signInOAuth,
+    signOut,
+    signUp,
+} from "./queries";
 import {
     TGetMeReponce,
     TSigInRequest,
@@ -17,18 +24,23 @@ type TAuthActions = {
         data: TSigUpRequest,
         config?: AxiosRequestConfig,
     ) => Promise<TSignUpResponce | undefined>;
+    getClientId: () => ReturnType<typeof getClientId>;
+    signInOAuth: (code: string) => void;
     signOut: (config?: AxiosRequestConfig) => Promise<void>;
     getMe: (config?: AxiosRequestConfig) => Promise<TGetMeReponce | undefined>;
 };
 
 type TAuthData = {
     me?: TGetMeReponce;
+    redirect_uri: string;
 };
 
 type TAuthStore = TAuthActions & TAuthData;
 
 const initialState: TAuthData = {
     me: undefined,
+    // не знаю почему, но не работает прямая пересылка на роут /auth/oauth
+    redirect_uri: window.location.origin,
 };
 
 export const useAuthStore = create<TAuthStore>()(
@@ -74,6 +86,21 @@ export const useAuthStore = create<TAuthStore>()(
 
                     throw error;
                 }
+            },
+            getClientId: () => {
+                const { redirect_uri } = get();
+                return getClientId({ redirect_uri });
+            },
+            signInOAuth: async (code) => {
+                const { redirect_uri } = get();
+
+                try {
+                    await signInOAuth({ redirect_uri, code });
+                } catch (error) {
+                    console.log(error);
+                }
+
+                history.push("/");
             },
             signOut: async (config) => {
                 try {

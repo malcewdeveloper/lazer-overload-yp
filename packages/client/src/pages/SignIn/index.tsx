@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Flex, Button, Form, Input, Typography } from "antd";
 import { Link } from "react-router-dom";
@@ -13,7 +13,11 @@ type TForm = {
 };
 
 export const SingIn: React.FC<object> = () => {
+    const [clientId, setClientId] = useState<string>();
+
     const signIn = useAuthStore((state) => state.signIn);
+    const getClientId = useAuthStore((state) => state.getClientId);
+    const redirect_uri = useAuthStore((state) => state.redirect_uri);
 
     const onFinish = async (values: TForm) => {
         try {
@@ -23,6 +27,14 @@ export const SingIn: React.FC<object> = () => {
             void 0;
         }
     };
+
+    useEffect(() => {
+        getClientId().then((res) => {
+            setClientId(res.data.service_id);
+        });
+    }, []);
+
+    const OAuthHref = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
 
     return (
         <Flex
@@ -74,6 +86,10 @@ export const SingIn: React.FC<object> = () => {
                     </Button>
                     &nbsp;Or&nbsp;
                     <Link to={routes.singUp.path}>register now!</Link>
+                    <br />
+                    <Typography.Link disabled={!clientId} href={OAuthHref}>
+                        OAuth авторизация
+                    </Typography.Link>
                 </Form.Item>
             </Form>
         </Flex>
