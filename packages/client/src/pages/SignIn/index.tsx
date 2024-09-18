@@ -81,7 +81,11 @@ export const SingIn: React.FC<object> = () => {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        data-testid="submit_btn"
+                    >
                         Log in
                     </Button>
                     &nbsp;Or&nbsp;

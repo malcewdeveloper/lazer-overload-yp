@@ -113,5 +113,4 @@
 -   переключение темы (сервер) [#75](https://github.com/malcewdeveloper/lazer-overload-yp/pull/75)
 -   серверная инфраструктура [#76](https://github.com/malcewdeveloper/lazer-overload-yp/pull/76)
 
-
 ### [Видео с комментариями по задачам](https://disk.yandex.ru/i/kV7WKzlpBsofOQ)
