@@ -1,11 +1,10 @@
 {
     "name": "client",
     "version": "0.0.0",
-    "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "preview": "vite preview",
+        "dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development node server/index.js",
+        "build": "tsc --project tsconfig.server.json && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
+        "preview": "node server/index.js",
         "lint": "eslint .",
         "format": "prettier --write .",
         "test": "jest --passWithNoTests ./"
@@ -16,12 +15,15 @@
         "axios": "^1.7.2",
         "dotenv": "^16.0.2",
         "eslint-config-prettier": "^8.5.0",
+        "express": "^4.19.2",
         "history": "4.10.1",
         "prettier": "^2.7.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "5.3.4",
         "sass": "^1.77.8",
+        "serialize-javascript": "^6.0.2",
+        "vite": "^5.4.3",
         "zustand": "^4.5.4"
     },
     "devDependencies": {
@@ -30,17 +32,19 @@
         "@types/react": "^18.0.17",
         "@types/react-dom": "^18.0.6",
         "@types/react-router-dom": "^5.3.3",
+        "@types/rollup": "^0.54.0",
+        "@types/serialize-javascript": "^5.0.4",
         "@typescript-eslint/eslint-plugin": "^5.35.1",
         "@typescript-eslint/parser": "^5.35.1",
         "@vitejs/plugin-react": "^2.0.1",
+        "cross-env": "^7.0.3",
         "eslint": "^8.23.0",
         "jest": "^28",
         "jest-environment-jsdom": "^29.0.1",
         "lefthook": "^1.3.9",
         "prettier": "^2.7.1",
         "ts-jest": "^28.0.8",
-        "typescript": "^4.8.2",
-        "vite": "^3.0.7"
+        "typescript": "^4.8.2"
     },
     "license": "MIT"
 }

@@ -2,13 +2,15 @@ class NotificationClass {
     status: NotificationPermission = "default";
 
     constructor() {
-        if (!("Notification" in window)) {
-            console.log("This browser does not support notifications.");
-        }
+        if (typeof window !== "undefined") {
+            if (!("Notification" in window)) {
+                console.log("This browser does not support notifications.");
+            }
 
-        Notification.requestPermission().then((res) => {
-            this.status = res;
-        });
+            Notification.requestPermission().then((res) => {
+                this.status = res;
+            });
+        }
     }
 
     open = ({ title, body, icon }: TNotificationOpen) => {
