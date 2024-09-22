@@ -1,10 +1,10 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen } from "@testing-library/react";
 import SingIn from "../index";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 
 describe("Страница регистрации", () => {
-    afterAll(() => cleanup());
+    afterEach(() => cleanup());
 
     it("Базовый рендер", () => {
         const { baseElement } = render(<SingIn />, {
@@ -20,7 +20,7 @@ describe("Страница регистрации", () => {
 
         const login = screen.getByPlaceholderText("Логин");
 
-        await userEvent.type(login, "invalid text");
+        await act(() => userEvent.type(login, "invalid text"));
 
         expect(baseElement).toMatchSnapshot();
     });
@@ -32,7 +32,7 @@ describe("Страница регистрации", () => {
 
         const login = screen.getByPlaceholderText("Логин");
 
-        await userEvent.type(login, "invalid text");
+        await act(() => userEvent.type(login, "invalid text"));
 
         const submit_button = await screen.findByTestId<HTMLButtonElement>(
             "submit_btn",
@@ -50,7 +50,7 @@ describe("Страница регистрации", () => {
 
         const password = screen.getByPlaceholderText("Пароль");
 
-        await userEvent.type(password, "invalid text");
+        await act(() => userEvent.type(password, "invalid text"));
 
         expect(baseElement).toMatchSnapshot();
     });
@@ -60,9 +60,9 @@ describe("Страница регистрации", () => {
             wrapper: BrowserRouter,
         });
 
-        const login = screen.getByPlaceholderText("Логин");
+        const password = screen.getByPlaceholderText("Пароль");
 
-        await userEvent.type(login, "invalid text");
+        await act(() => userEvent.type(password, "invalid text"));
 
         const submit_button = await screen.findByTestId<HTMLButtonElement>(
             "submit_btn",
