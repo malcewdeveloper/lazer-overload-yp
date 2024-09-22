@@ -226,7 +226,7 @@ exports[`Страница регистрации Выдает ошибку пр�
         id="normal_login"
       >
         <div
-          class="ant-form-item css-dev-only-do-not-override-d2lrxs ant-form-item-has-error"
+          class="ant-form-item css-dev-only-do-not-override-d2lrxs ant-form-item-with-help ant-form-item-has-error"
           style="margin-bottom: 16px;"
         >
           <div
@@ -498,7 +498,7 @@ exports[`Страница регистрации Выдает ошибку пр�
           </div>
         </div>
         <div
-          class="ant-form-item css-dev-only-do-not-override-d2lrxs ant-form-item-has-error"
+          class="ant-form-item css-dev-only-do-not-override-d2lrxs ant-form-item-with-help ant-form-item-has-error"
           style="margin-bottom: 16px;"
         >
           <div
