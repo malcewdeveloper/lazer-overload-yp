@@ -1,7 +1,9 @@
 import axios, { CreateAxiosDefaults } from "axios";
+import { stringify } from "qs";
 
 const baseConfig: CreateAxiosDefaults = {
     withCredentials: true,
+    paramsSerializer: (params) => stringify(params),
 };
 
 const serverConfig: CreateAxiosDefaults = {

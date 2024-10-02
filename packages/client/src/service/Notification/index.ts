@@ -1,16 +1,14 @@
 import { TNotificationOpen } from "./type";
 
 class NotificationClass {
-    status: NotificationPermission = "default";
+    status: "default" | "denied" | "granted" = "default";
 
     constructor() {
-        if (!("Notification" in window)) {
-            console.log("This browser does not support notifications.");
+        if ("Notification" in window) {
+            Notification.requestPermission().then((res) => {
+                this.status = res;
+            });
         }
-
-        Notification.requestPermission().then((res) => {
-            this.status = res;
-        });
     }
 
     open = ({ title, body, icon }: TNotificationOpen) => {

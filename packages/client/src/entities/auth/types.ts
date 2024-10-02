@@ -26,3 +26,16 @@ export type TGetMeReponce = {
     avatar: string;
     email: string;
 };
+
+export type TGetClientIdRequest = {
+    redirect_uri?: string;
+};
+
+export type TGetClientResponce = {
+    service_id: string;
+};
+
+export type TSignInOAuth = {
+    code?: string;
+    redirect_uri?: string;
+};
