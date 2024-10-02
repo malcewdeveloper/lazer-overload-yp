@@ -25,6 +25,10 @@ export const relativeRoutes = {
         path: "/sign-up",
         parent: "auth",
     },
+    OAuth: {
+        path: "/oauth",
+        parent: "auth",
+    },
     posts: {
         path: "",
         parent: "forum",

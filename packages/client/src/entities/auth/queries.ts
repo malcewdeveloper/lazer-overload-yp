@@ -1,8 +1,11 @@
 import { AxiosRequestConfig } from "axios";
 import { authApi } from "../../service";
 import {
+    TGetClientIdRequest,
+    TGetClientResponce,
     TGetMeReponce,
     TSigInRequest,
+    TSignInOAuth,
     TSignUpResponce,
     TSigUpRequest,
 } from "./types";
@@ -21,4 +24,21 @@ export const signOut = (config?: AxiosRequestConfig) => {
 
 export const getMe = (config?: AxiosRequestConfig) => {
     return authApi.get<TGetMeReponce>("/auth/user", config);
+};
+
+export const getClientId = (
+    params?: TGetClientIdRequest,
+    config?: AxiosRequestConfig,
+) => {
+    return authApi.get<TGetClientResponce>("/oauth/yandex/service-id", {
+        ...config,
+        params,
+    });
+};
+
+export const signInOAuth = (
+    data?: TSignInOAuth,
+    config?: AxiosRequestConfig,
+) => {
+    return authApi.post<TGetClientResponce>("/oauth/yandex", data, config);
 };
