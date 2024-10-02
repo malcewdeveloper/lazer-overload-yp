@@ -5,6 +5,7 @@ import classes from "./Game.module.scss";
 import { ArrowsAltOutlined, ShrinkOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
+import { ButtonChangeTheme } from "../../components/ButtonChangeTheme";
 
 export const Game: React.FC<object> = () => {
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -19,6 +20,8 @@ export const Game: React.FC<object> = () => {
 
     return (
         <Layout className={classes.root}>
+            <ButtonChangeTheme />
+
             <Content>
                 <Typography.Title level={1} className={classes.title}>
                     Game
