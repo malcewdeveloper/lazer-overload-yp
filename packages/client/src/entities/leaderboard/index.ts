@@ -18,14 +18,22 @@ type TLeaderboardActions = {
     ) => Promise<void>;
 };
 
+type TInitialState = {
+    leaders: unknown[];
+};
+
 export const initialState = {
     leaders: [],
 };
 
-export const useLeaderboardStore = create<TLeaderboardActions>()(
+export const useLeaderboardStore = create<
+    TLeaderboardActions & TInitialState
+>()(
     devtools(
         (set) => ({
             ...initialState,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             postLeaderboard: async (data, config) => {
                 // eslint-disable-next-line no-useless-catch
                 try {
@@ -45,12 +53,16 @@ export const useLeaderboardStore = create<TLeaderboardActions>()(
                 }
             },
 
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             postLeaderboards: async (data, config) => {
                 // eslint-disable-next-line no-useless-catch
                 try {
                     const responce = await postLeaderboards(data, config);
 
                     set((store) => {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
                         store.leaders = data;
                         return store;
                     });
