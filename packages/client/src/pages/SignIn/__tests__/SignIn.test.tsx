@@ -1,4 +1,4 @@
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import SingIn from "../index";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
@@ -21,7 +21,7 @@ describe("Страница регистрации", () => {
         const login = screen.getByPlaceholderText("Логин");
 
         await act(() => userEvent.type(login, "invalid text"));
-
+        await screen.findByRole("alert");
         expect(baseElement).toMatchSnapshot();
     });
 
@@ -51,7 +51,7 @@ describe("Страница регистрации", () => {
         const password = screen.getByPlaceholderText("Пароль");
 
         await act(() => userEvent.type(password, "invalid text"));
-
+        await screen.findByRole("alert");
         expect(baseElement).toMatchSnapshot();
     });
 

@@ -12,6 +12,12 @@ export default defineConfig({
     define: {
         __SERVER_PORT__: process.env.SERVER_PORT,
     },
+    resolve: {
+        alias: {
+            src: "/src",
+            public: "/public",
+        },
+    },
     plugins: [
         react(),
         VitePWA({

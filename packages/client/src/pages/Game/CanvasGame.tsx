@@ -1,8 +1,8 @@
 import React from "react";
-import { Game, Reflector } from "../../core";
-import { Emitter, Battery } from "../../core";
-import { TFrame } from "../../core/types";
-import spritePath from "/sprite.png";
+import { Game, Reflector, Emitter, Battery } from "src/core";
+import { TFrame } from "src/core/types";
+
+const spritePath = "/sprite.png";
 
 const reflectorFrames: TFrame[] = [
     { x: 0, y: 0, width: 283, height: 283, duration: 100 },

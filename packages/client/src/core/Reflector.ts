@@ -1,6 +1,7 @@
 import Entity from "./Entity";
 import Sprite from "./Sprite";
 import { TFrame } from "./types";
+import { inPoly } from "src/utils";
 
 export default class Reflector extends Entity {
     private _angle: number;
@@ -26,17 +27,18 @@ export default class Reflector extends Entity {
     }
 
     private _handleClick = (event: MouseEvent) => {
-        // Плохое и не точное отслеживание клика по рефлектору
         const rect = this._canvas.getBoundingClientRect();
         const clickX = event.clientX - rect.left;
         const clickY = event.clientY - rect.top;
 
-        if (
-            clickX >= this.x - this.width! / 2 &&
-            clickX <= this.x - this.width! / 2 + this.width! &&
-            clickY >= this.y &&
-            clickY <= this.y + this.height!
-        ) {
+        const points = [
+            { x: this.x + this.width! / 2, y: this.y + this.height! / 2 },
+            { x: this.x + this.width! / 2, y: this.y - this.height! / 2 },
+            { x: this.x - this.width! / 2, y: this.y - this.height! / 2 },
+            { x: this.x - this.width! / 2, y: this.y + this.height! / 2 },
+        ];
+
+        if (inPoly(clickX, clickY, points)) {
             this.rotate();
         }
     };
