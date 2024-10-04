@@ -7,6 +7,7 @@ export default class Sprite extends Entity {
     private _elapsedTime = 0;
     private _spriteSheet?: HTMLImageElement;
     public frames: TFrame[];
+    private _spriteSheetLoaded = false;
 
     constructor(
         x: number,
@@ -26,6 +27,8 @@ export default class Sprite extends Entity {
             this._spriteSheet = await loadImage(path);
         } catch (error) {
             throw Error(`Initialization sprite sheet error: ${error}`);
+        } finally {
+            this._spriteSheetLoaded = true;
         }
     }
 
@@ -45,6 +48,8 @@ export default class Sprite extends Entity {
 
     public render(ctx: CanvasRenderingContext2D): void {
         if (this.frames.length === 0) return;
+
+        if (!this._spriteSheetLoaded) return;
 
         if (!this._spriteSheet) {
             throw Error("Does not initialization Sprite Sheet");

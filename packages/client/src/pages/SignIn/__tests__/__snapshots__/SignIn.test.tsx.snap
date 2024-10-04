@@ -283,6 +283,17 @@ exports[`Страница регистрации Выдает ошибку пр�
                 style="display: flex; flex-wrap: nowrap;"
               >
                 <div
+                  class="ant-form-item-explain ant-form-item-explain-connected css-dev-only-do-not-override-d2lrxs"
+                  id="normal_login_login_help"
+                  role="alert"
+                >
+                  <div
+                    class="ant-form-item-explain-error"
+                  >
+                    Используйте только латинские буквы, цифры и дефисы.
+                  </div>
+                </div>
+                <div
                   style="width: 0px; height: 16px;"
                 />
               </div>
@@ -581,6 +592,17 @@ exports[`Страница регистрации Выдает ошибку пр�
               <div
                 style="display: flex; flex-wrap: nowrap;"
               >
+                <div
+                  class="ant-form-item-explain ant-form-item-explain-connected css-dev-only-do-not-override-d2lrxs"
+                  id="normal_login_password_help"
+                  role="alert"
+                >
+                  <div
+                    class="ant-form-item-explain-error"
+                  >
+                    Пароль должен содержать хотя бы одну заглавную букву
+                  </div>
+                </div>
                 <div
                   style="width: 0px; height: 16px;"
                 />
