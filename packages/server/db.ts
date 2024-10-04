@@ -1,5 +1,7 @@
 import { Client } from "pg";
+import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const {
@@ -33,3 +35,12 @@ export const createClientAndConnect = async (): Promise<Client | null> => {
 
     return null;
 };
+
+export const sequelize = new Sequelize({
+    dialect: "postgres",
+    database: POSTGRES_DB,
+    username: POSTGRES_USER,
+    password: POSTGRES_PASSWORD,
+    host: POSTGRES_HOST || "localhost",
+    port: Number(POSTGRES_PORT) || 5432,
+});
